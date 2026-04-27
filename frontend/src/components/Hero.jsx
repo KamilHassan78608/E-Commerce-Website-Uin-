@@ -1,69 +1,61 @@
-import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react'
-import { HERO_DATA } from '../data/hero-data';
+import pic1 from '../assets/pic11.png'
+import pic2 from '../assets/pic12.png'
+import pic3 from '../assets/pic14.png'
+import HeroImg from '../assets/Hero.jpg'
 
 const Hero = () => {
+    const slides = [
+        { title: "Men Collection", subtitle: "Our BestSellers", img: pic3 },
+        { title: "Women Collection", subtitle: "Just Released", img: pic2 },
+        { title: "Summer Collection", subtitle: "Customer Favorites", img: pic1 },
+        { title: "Kids Collection", subtitle: "Hot Deals", img: HeroImg }
+    ];
 
-  const [index, setindex] = useState(0);
+    const [index, setindex] = useState(0);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setindex((prev) => (prev + 1) % HERO_DATA.length);
-    }, 5000);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setindex((prev) => (prev + 1) % slides.length); 
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [slides.length]);
 
-    return () => clearInterval(timer);
-  }, []);
+    return (
+        <section className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10 md:my-20'>
+            <div className='flex flex-col-reverse md:flex-row justify-around items-center shadow-2xl shadow-gray-400 rounded-2xl overflow-hidden bg-white min-h-[500px]'>
 
-  const current = HERO_DATA[index];
+                {/* Text Section */}
+                <div className='w-full md:w-1/2 p-8 md:p-16 text-center md:text-left flex flex-col items-center md:items-start'>
+                    <h1 className='text-4xl lg:text-6xl font-bold gradient-text mb-2 transition-all duration-500'>
+                        {slides[index].title}
+                    </h1>
+                    <p className='text-sm md:text-base text-gray-500 mb-10 tracking-widest uppercase'>
+                        {slides[index].subtitle}
+                    </p>
+                    
+                    <a className='inline-block text-sm md:text-lg py-3 px-8 font-bold shadow-xl shadow-gray-300 hover:shadow-none cursor-pointer group relative uppercase tracking-widest hover:text-indigo-600 transition-all'>
+                        Shop Now
+                        {/* Animated Border Frames */}
+                        <span className="absolute w-0 group-hover:w-full left-0 top-0 h-0.5 bg-indigo-500 transition-all duration-300"></span>
+                        <span className="absolute w-0 group-hover:w-full right-0 bottom-0 h-0.5 bg-indigo-500 transition-all duration-300"></span>
+                        <span className="absolute h-0 group-hover:h-full left-0 bottom-0 w-0.5 bg-indigo-500 transition-all duration-300"></span>
+                        <span className="absolute h-0 group-hover:h-full right-0 top-0 w-0.5 bg-indigo-500 transition-all duration-300"></span>
+                    </a>
+                </div>
 
-  return (
-    <div className='relative h-screen w-full overflow-hidden bg-black flex items-center justify-center text-center text-white'>
+                {/* Image Section */}
+                <div className='w-full md:w-1/2 h-[300px] sm:h-[400px] md:h-[600px] overflow-hidden'>
+                    <img 
+                        src={slides[index].img} 
+                        alt={slides[index].title} 
+                        className='w-full h-full object-cover object-center transition-opacity duration-700 ease-in-out' 
+                    />
+                </div>
 
-      {/* Background Image with cross fade */}
-      <AnimatePresence mode='wait'>
-        <motion.div
-         key={current.img}
-         initial={{opacity : 0}}
-         animate={{opacity : 1}}
-         exit={{opacity : 0}}
-         transition={{duration : 1}}
-         className="absolute inset-0 bg-cover bg-center"
-         style={{ backgroundImage : `url(${current.img})`}}
-         >
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-black/40" />
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Content */}
-      <div className='z-10 relative max-w-2xl px-6'>
-        <AnimatePresence mode='wait'>
-          <motion.div
-            key={index}
-            initial={{y : 20, opacity : 0}}
-            animate={{y : 0, opacity : 1}}
-            exit={{y : -20, opacity : 0}}
-            transition={{duration : 0.6, ease : "easeOut"}}
-          >
-            <span className='text-sm tracking-[0.3em] font-medium text-white block mb-4'>
-              {current.label}
-            </span>
-            <h1 className='text-5xl md:text-7xl italic font-serif font-bold mb-6'>
-              {current.title}
-            </h1>
-            <p className='text-lg md:text-xl text-gray-200 mb-8 max-w-lg mx-auto leading-relaxed'>
-              {current.desc}
-            </p>
-            <button className='px-10 py-4 bg-white text-black font-bold uppercase tracking-wider cursor-pointer transition-all duration-300 hover:bg-transparent hover:border hover:border-gray-200 hover:text-white '>
-              Shop Now
-            </button>
-          </motion.div>
-        </AnimatePresence>
-
-      </div>
-      
-    </div>
-  )
+            </div>
+        </section>
+    )
 }
 
 export default Hero

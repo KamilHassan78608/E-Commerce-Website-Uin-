@@ -137,7 +137,7 @@ const Collection = () => {
         {/* Products */}
         <div>
 
-            <div className='flex items-center justify-between'>
+            <div className='flex flex-col md:flex-row gap-6 md:items-center md:justify-between'>
                 <h1 className='gradient-text tracking-wide'>All Collection</h1>
 
                 {/* Sorting Box */}
@@ -153,7 +153,7 @@ const Collection = () => {
 
             <hr className='my-10 text-gray-300'/>
 
-            <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6 my-10'>
+            <div className='flex items-center justify-between flex-wrap gap-4 gap-y-6 my-10'>
                 {
                     filterProducts.map((prod) => (
                         <Product_Card id={prod._id} name={prod.name} description={prod.description} price={prod.price} image={prod.image}/>

@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Gravitas+One&family=Michroma&family=Outfit:wght@100..900&family=Prata&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto+Slab:wght@100..900&family=Sanchez:ital@0;1&display=swap');
+@import "tailwindcss";
+
+*{
+    font-family: "Outfit", serif;
+}
+
+*{
+  @apply transition-all duration-300
+}
+
+.prata-regular {
+  font-family: "Prata", serif;
+  font-weight: 400; 
+  font-style: normal;
+}
+
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+.michroma-regular {
+  font-family: "Michroma", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+.gradient-text{
+    @apply text-transparent bg-clip-text bg-linear-to-r from-gray-600 to-gray-900;
+}
+
+h1{
+  @apply text-2xl md:text-6xl
+}
+
+

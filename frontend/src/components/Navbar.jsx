@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from "react-router-dom"
 import logo from '../assets/logo.png'
 import { List, Menu, Search, ShoppingCart, User2, X } from 'lucide-react'
 
@@ -7,7 +8,7 @@ const Navbar = () => {
     const [active, setActive] = useState("Home");
     const [isOpen, setisOpen] = useState(false);
 
-    const NavItems = ["Home", "Collection", "Contact Us", "About Us"];
+    const NavItems = ["Home", "Collection", "Discover", "Our Story", "Visit Us"];
 
   return (
     <nav className='flex items-center justify-between border-b border-gray-400 '>
@@ -20,9 +21,13 @@ const Navbar = () => {
         {/* Nav Items - Desktop Only */}
         <div className='hidden md:flex items-center gap-10'>
             {NavItems.map((item) => (
-                <a
+                <Link
                     key={item}
-                    href={`${item.toLowerCase().replace(" ", "-")}`}
+                    to={
+                        item === "Home" 
+                            ? "/" 
+                            : `/${item.toLowerCase().trim().replace(/\s+/g, "-")}`
+                    }
                     onClick={() => setActive(item)}
                     className={`group relative text-xs font-medium uppercase tracking-widest transition-all duration-300 hover:text-indigo-500 hover:scale-105 ${
                         active === item ? "text-indigo-500" : "text-gray-700"
@@ -36,7 +41,7 @@ const Navbar = () => {
                             active === item ? "w-full" : "w-0 group-hover:w-full"
                         }`}
                     ></span>
-                </a>
+                </Link>
             ))}
         </div>
 
@@ -75,9 +80,13 @@ const Navbar = () => {
             isOpen && 
                 <div className='fixed z-50 top-32 right-0 w-full bg-white shadow-md flex flex-col items-center gap-8 py-10 md:hidden'>
                     {NavItems.map((item) => (
-                        <a 
+                        <Link
                             key={item} 
-                            href={`#${item.toLowerCase().replace(" ", "-")}`}
+                            to={
+                                item === "Home" 
+                                    ? "/" 
+                                    : `/${item.toLowerCase().trim().replace(/\s+/g, "-")}`
+                            }
                             onClick={() => {
                                 setActive(item)
                                 setisOpen(false)
@@ -94,7 +103,7 @@ const Navbar = () => {
                                     active === item ? "w-full" : "w-0 group-hover:w-full"
                                 }`}
                             ></span>
-                        </a>
+                        </Link>
                     ))}
                 </div>
         }
