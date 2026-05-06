@@ -1,9 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Heart } from 'lucide-react'
 
-const Discover_Card = ({ title, vibe, description, image, tags }) => {
+const Discover_Card = ({ id, title, vibe, description, image, tags }) => {
   return (
-    <div className='w-100 relative my-4 hover:-translate-y-1 cursor-pointer group shadow shadow-gray-500 hover:shadow-2xl rounded-2xl flex flex-col items-center'>
+    <Link to={`/discover/${id}`} className='w-100 relative my-4 hover:-translate-y-1 cursor-pointer group shadow shadow-gray-500 hover:shadow-2xl rounded-2xl flex flex-col'>
       
       {/* Image and vibe */}
       <div className='overflow-hidden relative'>
@@ -36,7 +37,7 @@ const Discover_Card = ({ title, vibe, description, image, tags }) => {
         </button>
       </div> */}
 
-    </div>
+    </Link>
   )
 }
 

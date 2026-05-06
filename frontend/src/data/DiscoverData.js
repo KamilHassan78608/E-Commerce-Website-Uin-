@@ -1,49 +1,50 @@
-// discoverData.js - Streamlined version focusing on core Themes
-
 export const fashionThemes = [
   {
     id: 1,
     title: "Silent Poetry",
     vibe: "MINIMALIST",
-    description: "Fluid layers, raw linen & sculptural cuts. An ode to quiet strength and mindful minimalism.",
-    imageUrl: "https://images.pexels.com/photos/9958697/pexels-photo-9958697.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
-    tags: ["monochrome", "organic cotton", "slow craft"]
+    vibeKey: "MINIMALIST",
+    description: "Fluid layers, raw linen & sculptural cuts.",
+    fullDescription: "Minimalism with clean lines and natural fabrics.",
+    imageUrl: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
+    tags: ["monochrome", "organic cotton"],
+    seasonality: "Year-round",
+    category: "Basics & Essentials"
   },
   {
     id: 2,
     title: "Nomad Soul",
     vibe: "BOHEMIAN",
-    description: "Wanderlust textures, artisan embroidery & earthy tones. Inspired by Mediterranean sunsets.",
+    vibeKey: "BOHEMIAN",
+    description: "Wanderlust textures & earthy tones.",
+    fullDescription: "Bohemian spirit with artisan craft.",
     imageUrl: "https://images.pexels.com/photos/12867605/pexels-photo-12867605.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
-    tags: ["embroidery", "crochet", "desert rose"]
+    tags: ["embroidery", "crochet"],
+    seasonality: "Spring & Summer",
+    category: "Bohemian"
   },
   {
     id: 3,
     title: "Raw Structure",
     vibe: "AVANT-GARDE",
-    description: "Architectural folds, deconstructed tailoring, asymmetric hems — the future of heritage.",
-    imageUrl: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
-    tags: ["upcycled wool", "sculptural", "unisex"]
+    vibeKey: "AVANT-GARDE",
+    description: "Architectural and bold fashion.",
+    fullDescription: "Experimental and unconventional.",
+    imageUrl: "https://images.pexels.com/photos/9958697/pexels-photo-9958697.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
+    tags: ["sculptural"],
+    seasonality: "Fall & Winter",
+    category: "Experimental"
   },
   {
     id: 4,
     title: "Botanical Dream",
     vibe: "ROMANTIC",
-    description: "Hand-painted florals, petal sleeves & nature-inspired palettes — wear a secret garden.",
+    vibeKey: "ROMANTIC",
+    description: "Soft florals and elegance.",
+    fullDescription: "Nature-inspired feminine designs.",
     imageUrl: "https://images.pexels.com/photos/9320342/pexels-photo-9320342.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
-    tags: ["floral", "silk blend", "spring capsule"]
+    tags: ["floral"],
+    seasonality: "Spring & Summer",
+    category: "Romantic"
   }
 ];
-
-export const discoverPageContent = {
-  heroTitle: "Discover",
-  heroSubtitle: "Curated fashion themes — timeless elegance and modern edge.",
-  metaDescription: "Explore Eunoia Atelier's seasonal fashion themes."
-};
-
-const discoverData = {
-  fashionThemes,
-  discoverPageContent
-};
-
-export default discoverData;

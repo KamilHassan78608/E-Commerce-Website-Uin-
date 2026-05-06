@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ShopContext } from '../contents/ShopContext';
 
 const Product = () => {
     const { productId } = useParams();
-    const { products, Currency } = useContext(ShopContext);
+    const navigate = useNavigate();
+    const { products, Currency, addToCart, notification } = useContext(ShopContext);
     const [quantity, setQuantity] = useState(1);
     const [selectedImage, setSelectedImage] = useState(0);
     const [selectedSize, setSelectedSize] = useState(null);
@@ -19,6 +20,16 @@ const Product = () => {
 
     const product = products.find(item => item._id === productId);
 
+    const handleAddToCart = () => {
+        addToCart(productId, quantity, selectedSize);
+        setQuantity(1);
+    };
+
+    const handleBuyNow = () => {
+        addToCart(productId, quantity, selectedSize);
+        navigate('/checkout');
+    };
+
     if (!product) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -32,6 +43,20 @@ const Product = () => {
 
     return (
         <div className="px-4 sm:px-6 lg:px-8 py-10">
+
+            {/* New from here */}
+
+
+
+            
+            {/* Notification Toast */}
+            {notification && (
+                <div className={`fixed top-6 right-6 px-6 py-4 rounded-xl shadow-xl font-semibold text-white z-50 animate-slide-in transition-all
+                    ${notification.type === 'success' ? 'bg-green-500' : notification.type === 'error' ? 'bg-red-500' : 'bg-blue-500'}`}
+                >
+                    {notification.message}
+                </div>
+            )}
             <div className="flex flex-col lg:flex-row gap-12">
                 
                 {/* Images Section */}
@@ -147,11 +172,17 @@ const Product = () => {
 
                     {/* Action Buttons */}
                     <div className="space-y-4 pt-6">
-                        <button className="w-full cursor-pointer bg-gray-800 hover:bg-gray-900 transition-all text-white py-5 rounded-3xl font-semibold text-lg tracking-wider shadow-xl shadow-black/10 active:scale-[0.985]">
+                        <button 
+                            onClick={handleAddToCart}
+                            className="w-full cursor-pointer bg-gray-800 hover:bg-gray-900 transition-all text-white py-5 rounded-3xl font-semibold text-lg tracking-wider shadow-xl shadow-black/10 active:scale-[0.985]"
+                        >
                             ADD TO CART
                         </button>
                         
-                        <button className="w-full cursor-pointer border-2 border-black hover:bg-gray-50 transition-all py-5 rounded-3xl font-semibold text-lg tracking-wider">
+                        <button 
+                            onClick={handleBuyNow}
+                            className="w-full cursor-pointer border-2 border-black hover:bg-gray-50 transition-all py-5 rounded-3xl font-semibold text-lg tracking-wider"
+                        >
                             BUY NOW
                         </button>
                     </div>

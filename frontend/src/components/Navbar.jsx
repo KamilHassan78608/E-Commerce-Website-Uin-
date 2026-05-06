@@ -7,7 +7,7 @@ import SearchBar from './SearchBar';
 
 const Navbar = () => {
 
-    const { showSearch, setshowSearch, navigate } = useContext(ShopContext);
+    const { showSearch, setshowSearch, navigate, cart } = useContext(ShopContext);
 
     const [active, setActive] = useState("Home");
     const [isOpen, setisOpen] = useState(false);
@@ -28,6 +28,8 @@ const Navbar = () => {
             );
             if (matchedItem) {
                 setActive(matchedItem);
+            } else {
+                setActive(''); // Clear active state for non-nav routes like cart, checkout
             }
         }
     }, [location.pathname]);
@@ -83,13 +85,15 @@ const Navbar = () => {
                     <User2 size={22} />
                 </Link>
                 
-                <button aria-label="Shopping Cart" className='relative text-gray-800 transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'>
+                <Link to="/cart" aria-label="Shopping Cart" className='relative text-gray-800 transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'>
                     <ShoppingCart size={22} />
                     {/* Cart Badge */}
-                    <span className='absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-indigo-500 text-[10px] font-bold text-white'>
-                        3
-                    </span>
-                </button>
+                    {cart.length > 0 && (
+                        <span className='absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-indigo-500 text-[10px] font-bold text-white'>
+                            {cart.length}
+                        </span>
+                    )}
+                </Link>
 
                 {/* Mobile Menu Toggle */}
                 <button 

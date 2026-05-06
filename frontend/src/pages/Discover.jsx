@@ -28,7 +28,7 @@ const Discover = () => {
         <div className='flex items-center justify-between gap-4 flex-wrap'>
             {
                 productscolection.map((prod) => (
-                    <Discover_Card key={prod.id} title={prod.title} vibe={prod.vibe} description={prod.description} image={prod.imageUrl} tags={prod.tags} />
+                    <Discover_Card key={prod.id} id={prod.id} title={prod.title} vibe={prod.vibe} description={prod.description} image={prod.imageUrl} tags={prod.tags} />
                 ))
             }
 
