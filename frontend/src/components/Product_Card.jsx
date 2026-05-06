@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import pic1 from '../assets/pic1.png'
 import { ShopContext } from '../contents/ShopContext'
 
@@ -7,7 +8,7 @@ const Product_Card = ({ id, name, description, price, image }) => {
     const { Currency } = useContext(ShopContext);
 
   return (
-    <a className='w-80 hover:-translate-y-1 cursor-pointer group shadow rounded-2xl shadow-gray-300 flex flex-col items-center'>
+    <Link to={`/product/${id}`} className='w-80 hover:-translate-y-1 cursor-pointer group shadow rounded-2xl shadow-gray-300 flex flex-col items-center'>
       <div className='w-80 h-80 overflow-hidden'>
         <img src={image} alt="image" className='object-cover group-hover:scale-115' />
       </div>
@@ -22,8 +23,7 @@ const Product_Card = ({ id, name, description, price, image }) => {
         <span className="absolute h-0 group-hover:h-full left-0 -bottom-1 w-0.5 bg-gray-900"></span>
         <span className="absolute h-0 group-hover:h-full right-0 top-0 w-0.5 bg-gray-900"></span> */}
 
-
-    </a>
+    </Link>
   )
 }
 

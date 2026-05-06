@@ -1,60 +1,87 @@
-import React, { useState } from 'react'
-import { Link } from "react-router-dom"
+import React, { useState, useEffect, useContext } from 'react'
+import { Link, useLocation } from "react-router-dom"
 import logo from '../assets/logo.png'
 import { List, Menu, Search, ShoppingCart, User2, X } from 'lucide-react'
+import { ShopContext } from '../contents/ShopContext'
+import SearchBar from './SearchBar';
 
 const Navbar = () => {
 
+    const { showSearch, setshowSearch, navigate } = useContext(ShopContext);
+
     const [active, setActive] = useState("Home");
     const [isOpen, setisOpen] = useState(false);
+    const location = useLocation();
 
     const NavItems = ["Home", "Collection", "Discover", "Our Story", "Visit Us"];
 
+    useEffect(() => {
+        const currentPath = location.pathname;
+        
+        if (currentPath === '/') {
+            setActive('Home');
+        } else {
+            // Convert path to matching NavItem
+            const pathName = currentPath.substring(1).replace(/-/g, ' ');
+            const matchedItem = NavItems.find(item => 
+                item.toLowerCase() === pathName.toLowerCase()
+            );
+            if (matchedItem) {
+                setActive(matchedItem);
+            }
+        }
+    }, [location.pathname]);
+
   return (
-    <nav className='flex items-center justify-between border-b border-gray-400 '>
+    <>
+      <SearchBar />
+      <nav className='flex items-center justify-between border-b border-gray-400 '>
 
-        {/* Logo */}
-        <div className=''>
-            <img src={logo} alt="Dukan" className='w-30 md:w-40' />
-        </div>
+          {/* Logo */}
+          <Link to='/'>
+              <img src={logo} alt="Dukan" className='w-30 md:w-40' />
+          </Link>
 
-        {/* Nav Items - Desktop Only */}
-        <div className='hidden md:flex items-center gap-10'>
-            {NavItems.map((item) => (
-                <Link
-                    key={item}
-                    to={
-                        item === "Home" 
-                            ? "/" 
-                            : `/${item.toLowerCase().trim().replace(/\s+/g, "-")}`
-                    }
-                    onClick={() => setActive(item)}
-                    className={`group relative text-xs font-medium uppercase tracking-widest transition-all duration-300 hover:text-indigo-500 hover:scale-105 ${
-                        active === item ? "text-indigo-500" : "text-gray-700"
-                    }`}
-                >
-                    {item}
-                    
-                    {/* Dynamic underline */}
-                    <span
-                        className={`absolute left-0 -bottom-1 h-0.5 bg-indigo-500 transition-all duration-300 ${
-                            active === item ? "w-full" : "w-0 group-hover:w-full"
-                        }`}
-                    ></span>
-                </Link>
-            ))}
-        </div>
+          {/* Nav Items - Desktop Only */}
+          <div className='hidden md:flex items-center gap-10'>
+              {NavItems.map((item) => (
+                  <Link
+                      key={item}
+                      to={
+                          item === "Home" 
+                              ? "/" 
+                              : `/${item.toLowerCase().trim().replace(/\s+/g, "-")}`
+                      }
+                      className={`group relative text-xs font-medium uppercase tracking-widest transition-all duration-300 hover:text-indigo-500 hover:scale-105 ${
+                          active === item ? "text-indigo-500" : "text-gray-700"
+                      }`}
+                  >
+                      {item}
+                      
+                      {/* Dynamic underline */}
+                      <span
+                          className={`absolute left-0 -bottom-1 h-0.5 bg-indigo-500 transition-all duration-300 ${
+                              active === item ? "w-full" : "w-0 group-hover:w-full"
+                          }`}
+                      ></span>
+                  </Link>
+              ))}
+          </div>
 
-        {/* Right Side Icons */}
-            <div className='flex items-center gap-5'>
-                {/* Wrapped icons in button tags for accessibility */}
-                <button aria-label="Search" className='text-gray-800 transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'>
-                    <Search size={22} />
-                </button>
+          {/* Right Side Icons */}
+              <div className='flex items-center gap-5'>
+                  {/* Search Icon Button */}
+                  <button 
+                      onClick={() => setshowSearch(prev => !prev)}
+                      className='text-gray-800 transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'
+                      aria-label="Search"
+                  >
+                      <Search size={22} />
+                  </button>
                 
-                <button aria-label="User Account" className='text-gray-800 transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'>
+                <Link to="/auth" aria-label="User Account" className='text-gray-800 transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'>
                     <User2 size={22} />
-                </button>
+                </Link>
                 
                 <button aria-label="Shopping Cart" className='relative text-gray-800 transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'>
                     <ShoppingCart size={22} />
@@ -108,7 +135,8 @@ const Navbar = () => {
                 </div>
         }
       
-    </nav>
+      </nav>
+    </>
   )
 }
 

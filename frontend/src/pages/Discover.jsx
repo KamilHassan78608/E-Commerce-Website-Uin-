@@ -21,7 +21,7 @@ const Discover = () => {
     <div>
         {/* Heading */}
         <div className='my-6'> 
-            <h1 className='gradient-text tracking-wide'>Discover</h1>
+            <h2 className='text-4xl md:text-6xl font-black gradient-text tracking-tight'>Discover</h2>
             <p className='text-gray-500 tracking-tight text-2xs'>Curated fashion themes & mood-driven collections — timeless elegance, modern edge, and slow-fashion inspiration.</p>
         </div>
 

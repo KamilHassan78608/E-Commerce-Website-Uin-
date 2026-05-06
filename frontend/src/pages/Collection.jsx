@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp, SlidersHorizontal } from 'lucide-react'
+import { ChevronDown, ChevronUp, Search, SlidersHorizontal } from 'lucide-react'
 import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../contents/ShopContext';
 import Product_Card from '../components/Product_Card';
@@ -8,10 +8,33 @@ const Collection = () => {
     const { products } = useContext(ShopContext);
 
     const [filterProducts, setfilterProducts] = useState([]);
-    const [isFilterOpen, setisFilterOpen] = useState(false);
+    const [isFilterOpen, setisFilterOpen] = useState(true);
     const [category, setcategory] = useState([]);
     const [subCategory, setsubCategory] = useState([]);
     const [SortType, setSortType] = useState("relevent");
+
+
+    // Useeffect for isfilteropen
+    useEffect(() => {  
+        const mediaQuery = window.matchMedia("(min-width: 768px)");  
+
+        const handleResize = (e) => {  
+            if (e.matches) {  
+                setisFilterOpen(true);
+            }  
+        };  
+
+        // Run once on mount  
+        if (mediaQuery.matches) {  
+            setisFilterOpen(true);  
+        }  
+
+        mediaQuery.addEventListener("change", handleResize);  
+
+        return () => {  
+            mediaQuery.removeEventListener("change", handleResize);  
+        };  
+    }, []);
 
     const toogleCategories = (event) => {
         if(category.includes(event.target.value)){
@@ -78,12 +101,13 @@ const Collection = () => {
                 <button className='flex items-center gap-2 py-2 px-4 border border-gray-400 text-gray-600 rounded-lg shadow-2xl'>
                     <SlidersHorizontal className='w-5 h-5'/>
                     <span>Filter</span>
-
-                    {
-                        isFilterOpen ? 
-                        <ChevronUp className='w-5 h-5 cursor-pointer' onClick={() => setisFilterOpen(prev => !prev)}/>
-                        : <ChevronDown className='w-5 h-5 cursor-pointer' onClick={() => setisFilterOpen(prev => !prev)}/>
-                    }
+                    <span className='block md:hidden'>
+                        {
+                            isFilterOpen ? 
+                            <ChevronUp className='w-5 h-5 cursor-pointer' onClick={() => setisFilterOpen(prev => !prev)}/>
+                            : <ChevronDown className='w-5 h-5 cursor-pointer' onClick={() => setisFilterOpen(prev => !prev)}/>
+                        }
+                    </span>
                 </button>
             </div>
 
@@ -132,13 +156,28 @@ const Collection = () => {
                         <label htmlFor="dresses">  Dresses</label>
                     </div>
             </div>
+
+            <hr className='my-6 text-gray-300'/>
+
+            <div className='flex flex-wrap gap-4 max-w-70 mb-10'>
+                {
+                    category.map((cat) =>(
+                        <p className='px-4 text-sm font-normal text-indigo-500 rounded-2xl bg-gray-200'>{cat}</p>
+                    ))
+                }
+                {
+                    subCategory.map((cat) => (
+                        <p className='px-4 text-sm font-normal text-indigo-500 rounded-2xl bg-gray-200'>{cat}</p>
+                    ))
+                }
+            </div>
         </div>
 
         {/* Products */}
         <div>
-
+-
             <div className='flex flex-col md:flex-row gap-6 md:items-center md:justify-between'>
-                <h1 className='gradient-text tracking-wide'>All Collection</h1>
+                <h2 className='text-4xl md:text-6xl font-black gradient-text tracking-tight'>Latest Collection</h2>
 
                 {/* Sorting Box */}
                 <div>
@@ -153,7 +192,17 @@ const Collection = () => {
 
             <hr className='my-10 text-gray-300'/>
 
+        
             <div className='flex items-center justify-between flex-wrap gap-4 gap-y-6 my-10'>
+                {/* What if we have no products */}
+                {
+                    filterProducts.length === 0 
+                    ?
+                    <p className='text-gray-600'>Sorry we currently does not have this stock</p>
+                    :
+                    <></>
+
+                }
                 {
                     filterProducts.map((prod) => (
                         <Product_Card id={prod._id} name={prod.name} description={prod.description} price={prod.price} image={prod.image}/>
