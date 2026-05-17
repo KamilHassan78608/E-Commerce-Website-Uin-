@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import ConnectDB from './config/mongoDB.js';
 import router from './routes/authRoutes.js';
+import uploadRoutes from './routes/uploadRoute.js';
 
 // App Configuration
 const app = express();
@@ -20,6 +21,7 @@ ConnectDB();
 
 // Routes
 app.use('/api/auth', router);
+app.use('/api/upload', uploadRoutes);
 
 // API EndPoints
 app.get('/', (req, res) => {
