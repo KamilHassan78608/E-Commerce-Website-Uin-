@@ -18,6 +18,7 @@ const products = [
   {
     _id: "prod001",
     name: "Denim Jacket for Men",
+    description: "Classic blue denim jacket with a rugged look, perfect for layering in all seasons.",
     price: 120,
     image: pic1,
     category: "Men",
@@ -29,6 +30,7 @@ const products = [
   {
     _id: "prod002",
     name: "White Crew Neck T-Shirt",
+    description: "Soft cotton t-shirt with a clean minimalist design for everyday comfort.",
     price: 40,
     image: pic2,
     category: "Men",
@@ -39,6 +41,7 @@ const products = [
   {
     _id: "prod003",
     name: "Black Women's Dress",
+    description: "Elegant black dress designed for evening wear and special occasions.",
     price: 90,
     image: pic3,
     category: "Women",
@@ -50,6 +53,7 @@ const products = [
   {
     _id: "prod004",
     name: "Men's Jeans",
+    description: "Comfortable slim-fit jeans made from durable denim fabric.",
     price: 70,
     image: pic4,
     category: "Men",
@@ -60,6 +64,7 @@ const products = [
   {
     _id: "prod005",
     name: "Kids' Puffer Jacket",
+    description: "Warm and lightweight puffer jacket designed to keep kids cozy in winter.",
     price: 60,
     image: pic5,
     category: "Kids",
@@ -71,6 +76,7 @@ const products = [
   {
     _id: "prod006",
     name: "Kids' Yellow Raincoat",
+    description: "Bright yellow raincoat with waterproof material, perfect for rainy days.",
     price: 50,
     image: pic6,
     category: "Kids",
@@ -81,6 +87,7 @@ const products = [
   {
     _id: "prod007",
     name: "White Summer Dress",
+    description: "Lightweight and airy summer dress ideal for warm sunny days.",
     price: 80,
     image: pic7,
     category: "Women",
@@ -92,6 +99,7 @@ const products = [
   {
     _id: "prod008",
     name: "Folded Sweaters Pack",
+    description: "Pack of cozy sweaters designed for comfort and layering during colder months.",
     price: 100,
     image: pic8,
     category: "Unisex",
@@ -102,6 +110,7 @@ const products = [
   {
     _id: "prod009",
     name: "Kids' Denim Overalls",
+    description: "Durable and stylish denim overalls for active kids.",
     price: 55,
     image: pic9,
     category: "Kids",
@@ -113,6 +122,7 @@ const products = [
   {
     _id: "prod010",
     name: "Men's Formal Shirt",
+    description: "Crisp formal shirt suitable for office wear and formal occasions.",
     price: 65,
     image: pic10,
     category: "Men",
@@ -123,6 +133,7 @@ const products = [
   {
     _id: "prod011",
     name: "Gray Cardigan",
+    description: "Soft knit cardigan with a relaxed fit, perfect for casual layering.",
     price: 75,
     image: pic11,
     category: "Men",
@@ -133,6 +144,7 @@ const products = [
   {
     _id: "prod012",
     name: "Men's Checked Shirt",
+    description: "Stylish checked shirt offering a casual yet trendy look.",
     price: 60,
     image: pic12,
     category: "Men",
@@ -144,6 +156,7 @@ const products = [
   {
     _id: "prod013",
     name: "Men's White Dress Shirt",
+    description: "Premium white dress shirt for a sharp and professional appearance.",
     price: 70,
     image: pic13,
     category: "Men",
@@ -155,6 +168,7 @@ const products = [
   {
     _id: "prod014",
     name: "Men's Light Blue Shirt",
+    description: "Light blue shirt with a fresh and modern style for daily wear.",
     price: 65,
     image: pic14,
     category: "Men",
@@ -165,6 +179,7 @@ const products = [
   {
     _id: "prod015",
     name: "Men's Navy Pants",
+    description: "Smart navy pants with a tailored fit for both casual and formal settings.",
     price: 80,
     image: pic15,
     category: "Men",
