@@ -4,10 +4,12 @@ import logo from '../assets/logo.png'
 import { List, Menu, Search, ShoppingCart, User2, X } from 'lucide-react'
 import { ShopContext } from '../contents/ShopContext'
 import SearchBar from './SearchBar';
+import { useAuth } from '../contents/AuthContext'
 
 const Navbar = () => {
 
     const { showSearch, setshowSearch, navigate, cart } = useContext(ShopContext);
+    const { user } = useAuth();
 
     const [active, setActive] = useState("Home");
     const [isOpen, setisOpen] = useState(false);
@@ -81,9 +83,26 @@ const Navbar = () => {
                       <Search size={22} />
                   </button>
                 
-                <Link to="/auth" aria-label="User Account" className='text-gray-800 transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'>
+                { user ? 
+                    <Link 
+                        to="/profile" 
+                        aria-label="User Account" 
+                        className='text-gray-800 rounded-full transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'
+                    >
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREEL0fugUdSLA3irSG8d2zytjXGJ6TCKhWAw&s" className='object-cover rounded-full h-7 w-7' alt="profile" />
+                    </Link>
+                    :
+                    <Link 
+                        to="/login" 
+                        aria-label="User Account" 
+                        className='text-gray-800 transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'
+                    >
+                        <User2 size={22} />
+                    </Link>
+                }
+                {/* <Link to="/login" aria-label="User Account" className='text-gray-800 transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'>
                     <User2 size={22} />
-                </Link>
+                </Link> */}
                 
                 <Link to="/cart" aria-label="Shopping Cart" className='relative text-gray-800 transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'>
                     <ShoppingCart size={22} />
