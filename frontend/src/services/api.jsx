@@ -48,4 +48,11 @@ export const getMyCards = () => api.get('/wallet/cards');
 export const setDefaultCard = (cardId) => api.put(`/wallet/card/${cardId}/default`);
 export const deleteCard = (cardId) => api.delete(`/wallet/card/${cardId}`);
 
+// Cart Apis
+export const getMyCart = () => api.get('/cart/my-cart');
+export const addToCartAPI = (cartData) => api.post('/cart/add-item', cartData);
+export const updateCartItemAPI = (updateData) => api.put('/cart/update-item', updateData);
+export const removeFromCartAPI = (removeData) => api.delete('/cart/remove-item', { data: removeData });
+export const clearCartAPI = () => api.delete('/cart/clear-cart');
+
 export default api;

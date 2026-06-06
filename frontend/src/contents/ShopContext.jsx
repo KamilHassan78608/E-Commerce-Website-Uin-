@@ -1,7 +1,8 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import products from '../data/Products';
 import { fashionThemes } from "../data/DiscoverData";
+import { getMyCart, addToCartAPI, updateCartItemAPI, removeFromCartAPI, clearCartAPI } from '../services/api';
 
 export const ShopContext = createContext();
 
@@ -13,8 +14,33 @@ const ShopContextProvider = (props) => {
     const [searchResults, setSearchResults] = useState([]);
     const [cart, setCart] = useState([]);
     const [notification, setNotification] = useState(null);
+    const [cartLoading, setCartLoading] = useState(false);
+    const [cartError, setCartError] = useState(null);
 
     const navigate = useNavigate();
+
+    // Load cart from backend on mount if user is logged in
+    useEffect(() => {
+        const loadCart = async () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    setCartLoading(true);
+                    const response = await getMyCart();
+                    if (response.data.success) {
+                        setCart(response.data.cart.items || []);
+                    }
+                } catch (error) {
+                    console.error('Failed to load cart:', error);
+                    // Cart might not exist yet, that's okay
+                }finally {
+                    setCartLoading(false);
+                }
+            }
+        };
+
+        loadCart();
+    }, []);
 
     // Search filter function
     const filterProducts = (query) => {
@@ -34,10 +60,8 @@ const ShopContextProvider = (props) => {
         setSearchResults(filtered);
     }
 
-    // New From Here
-
-    // Add to cart function
-    const addToCart = (productId, quantity, size) => {
+    // Add to cart function - syncs with backend
+    const addToCart = async (productId, quantity, size) => {
         const product = products.find(item => item._id === productId);
         
         if (!product) {
@@ -50,53 +74,102 @@ const ShopContextProvider = (props) => {
             return;
         }
 
-        const cartItem = {
-            _id: productId,
-            name: product.name,
-            price: product.price,
-            image: product.image,
-            quantity,
-            size,
-            totalPrice: product.price * quantity
-        };
+        const token = localStorage.getItem('token');
+        if (!token) {
+            showNotification("Please login to add items to cart", "error");
+            navigate('/login');
+            return;
+        }
 
-        const existingItem = cart.find(item => item._id === productId && item.size === size);
+        try {
+            const response = await addToCartAPI({
+                productId,
+                name: product.name,
+                price: product.price,
+                image: product.image,
+                quantity,
+                size
+            });
 
-        if (existingItem) {
-            setCart(cart.map(item => 
-                item._id === productId && item.size === size
-                    ? { ...item, quantity: item.quantity + quantity, totalPrice: item.price * (item.quantity + quantity) }
-                    : item
-            ));
-            showNotification(`Updated ${product.name} quantity`, "success");
-        } else {
-            setCart([...cart, cartItem]);
-            showNotification(`${product.name} added to cart`, "success");
+            if (response.data.success) {
+                setCart(response.data.cart.items || []);
+                showNotification(`${product.name} added to cart`, "success");
+            }
+        } catch (error) {
+            const errorMsg = error.response?.data?.message || 'Failed to add item to cart';
+            showNotification(errorMsg, "error");
+            console.error('Error adding to cart:', error);
         }
     };
 
-    // Remove from cart
-    const removeFromCart = (productId, size) => {
-        setCart(cart.filter(item => !(item._id === productId && item.size === size)));
-        showNotification("Item removed from cart", "info");
+    // Remove from cart - syncs with backend
+    const removeFromCart = async (productId, size) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            showNotification("Please login", "error");
+            return;
+        }
+
+        try {
+            const response = await removeFromCartAPI({ productId, size });
+
+            if (response.data.success) {
+                setCart(response.data.cart.items || []);
+                showNotification("Item removed from cart", "info");
+            }
+        } catch (error) {
+            const errorMsg = error.response?.data?.message || 'Failed to remove item';
+            showNotification(errorMsg, "error");
+            console.error('Error removing from cart:', error);
+        }
     };
 
-    // Update cart quantity
-    const updateCartQuantity = (productId, size, quantity) => {
+    // Update cart quantity - syncs with backend
+    const updateCartQuantity = async (productId, size, quantity) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            showNotification("Please login", "error");
+            return;
+        }
+
         if (quantity <= 0) {
             removeFromCart(productId, size);
             return;
         }
-        setCart(cart.map(item =>
-            item._id === productId && item.size === size
-                ? { ...item, quantity, totalPrice: item.price * quantity }
-                : item
-        ));
+
+        try {
+            const response = await updateCartItemAPI({ productId, size, quantity });
+
+            if (response.data.success) {
+                setCart(response.data.cart.items || []);
+            }
+        } catch (error) {
+            const errorMsg = error.response?.data?.message || 'Failed to update quantity';
+            showNotification(errorMsg, "error");
+            console.error('Error updating quantity:', error);
+        }
     };
 
-    // Clear cart
-    const clearCart = () => {
-        setCart([]);
+    // Clear cart - syncs with backend
+    const clearCart = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            showNotification("Please login", "error");
+            return;
+        }
+
+        try {
+            const response = await clearCartAPI();
+
+            if (response.data.success) {
+                setCart([]);
+                showNotification("Cart cleared", "success");
+            }
+        } catch (error) {
+            const errorMsg = error.response?.data?.message || 'Failed to clear cart';
+            showNotification(errorMsg, "error");
+            console.error('Error clearing cart:', error);
+        }
     };
 
     // Show notification
@@ -104,9 +177,6 @@ const ShopContextProvider = (props) => {
         setNotification({ message, type });
         setTimeout(() => setNotification(null), 3000);
     };
-
-
-    // New Upto here
 
     // handle Search 
     const handleSearchChange = (query) => {
@@ -128,7 +198,9 @@ const ShopContextProvider = (props) => {
         removeFromCart,
         updateCartQuantity,
         clearCart,
-        notification
+        notification,
+        cartLoading,
+        cartError
     };
 
     return (

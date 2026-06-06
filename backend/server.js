@@ -7,6 +7,7 @@ import uploadRoutes from './routes/uploadRoute.js';
 import orderRoutes from './routes/orderRoutes.js';
 import userRoutes from './routes/userRouter.js';
 import walletRoutes from './routes/walletRoutes.js';
+import cartRoutes from './routes/cartRoutes.js';
 
 // App Configuration
 const app = express();
@@ -28,6 +29,7 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/wallet', walletRoutes);
+app.use('/api/cart', cartRoutes);
 
 // API EndPoints
 app.get('/', (req, res) => {
