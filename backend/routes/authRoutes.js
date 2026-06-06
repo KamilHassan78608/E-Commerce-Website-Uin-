@@ -55,7 +55,12 @@ router.post('/register', [
                 id : user._id,
                 name: user.name,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                profilePicture: user.profilePicture,
+                phone: user.phone,
+                address: user.address,
+                bio: user.bio,
+                createdAt: user.createdAt
             }
         });
 
@@ -108,7 +113,8 @@ router.post('/login', [
         // Generating token
         const token = generateToken({
             userId: user._id,
-            role: user.role
+            role: user.role,
+            
         });
 
         // Sending back the user
@@ -120,7 +126,12 @@ router.post('/login', [
                 id : user._id,
                 name: user.name,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                profilePicture: user.profilePicture,
+                phone: user.phone,
+                address: user.address,
+                bio: user.bio,
+                createdAt: user.createdAt
             }
         })
     } catch (error) {
@@ -150,6 +161,79 @@ router.get('/users', protect, adminOnly, async (req, res) => {
         res.json(users);
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+});
+
+// Update User Profile
+// API Endpoint - /api/auth/update
+// Method - PUT
+router.put('/update', protect, [
+    body('name').optional().notEmpty().withMessage("Name cannot be empty"),
+    body('phone').optional().isLength({ min: 10 }).withMessage("Phone must be at least 10 digits"),
+    body('email').optional().isEmail().withMessage("Valid Email is Required!")
+], async (req, res) => {
+    try {
+        // Check for validation errors
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                errors: errors.array()
+            });
+        }
+
+        // Get user ID from token
+        const userId = req.user.userId;
+
+        // Extract update data from request body
+        const { name, email, phone, bio, profilePicture, address } = req.body;
+
+        // Check if email is already in use by another user
+        if (email) {
+            const emailExists = await User.findOne({ email, _id: { $ne: userId } });
+            if (emailExists) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Email is already in use"
+                });
+            }
+        }
+
+        // Prepare update object
+        const updateData = {};
+        if (name) updateData.name = name;
+        if (email) updateData.email = email;
+        if (phone) updateData.phone = phone;
+        if (bio) updateData.bio = bio;
+        if (profilePicture) updateData.profilePicture = profilePicture;
+        if (address) {
+            updateData.address = {
+                street: address.street || "",
+                city: address.city || "",
+                state: address.state || "",
+                zipCode: address.zipCode || ""
+            };
+        }
+
+        // Update user in database
+        const user = await User.findByIdAndUpdate(
+            userId,
+            updateData,
+            { new: true, runValidators: true }
+        ).select('-password');
+
+        // Success response
+        res.status(200).json({
+            success: true,
+            message: "User profile updated successfully",
+            user
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 });
 

@@ -1,9 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShopContext } from '../contents/ShopContext';
+import { useAuth } from '../contents/AuthContext';
+import { createOrder } from '../services/api';
 
 const Checkout = () => {
     const { cart, Currency, clearCart, notification } = useContext(ShopContext);
+    const { user } = useAuth();
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -23,6 +26,28 @@ const Checkout = () => {
 
     const [orderPlaced, setOrderPlaced] = useState(false);
 
+    // Pre-fill form with logged-in user data
+    useEffect(() => {
+        if (user) {
+            // Extract first and last name from user.name
+            const nameParts = user.name.split(' ');
+            const firstName = nameParts[0] || '';
+            const lastName = nameParts.slice(1).join(' ') || '';
+
+            setFormData(prev => ({
+                ...prev,
+                firstName: firstName,
+                lastName: lastName,
+                email: user.email || '',
+                phone: user.phone || '',
+                address: user.address?.street || '',
+                city: user.address?.city || '',
+                state: user.address?.state || '',
+                zipCode: user.address?.zipCode || ''
+            }));
+        }
+    }, [user]);
+
     // Calculate totals
     const subtotal = cart.reduce((sum, item) => sum + item.totalPrice, 0);
     const shipping = subtotal > 0 ? 50 : 0;
@@ -31,14 +56,40 @@ const Checkout = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        
+        // Prevent editing of firstName, lastName, email, phone
+        if (['firstName', 'lastName', 'email', 'phone'].includes(name)) {
+            return;
+        }
+        
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
     };
 
-    const handlePlaceOrder = (e) => {
+    const handlePlaceOrder = async (e) => {
         e.preventDefault();
+
+        // Verify user is logged in
+        if (!user) {
+            alert('Please log in first');
+            navigate('/login');
+            return;
+        }
+
+        // Validate that personal details match logged-in user
+        const nameParts = user.name.split(' ');
+        const expectedFirstName = nameParts[0] || '';
+        const expectedLastName = nameParts.slice(1).join(' ') || '';
+        
+        if (formData.firstName !== expectedFirstName || 
+            formData.lastName !== expectedLastName ||
+            formData.email !== user.email ||
+            formData.phone !== user.phone) {
+            alert('Personal details must match your profile information');
+            return;
+        }
 
         // Validate form
         if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || 
@@ -58,14 +109,57 @@ const Checkout = () => {
             return;
         }
 
-        // Process order
-        setOrderPlaced(true);
-        clearCart();
+        if (cart.length === 0) {
+            alert('Your cart is empty');
+            return;
+        }
 
-        // Redirect to order confirmation after 3 seconds
-        setTimeout(() => {
-            navigate('/');
-        }, 3000);
+        try {
+            // Prepare order data
+            const orderData = {
+                items: cart.map(item => ({
+                    productId: item._id,
+                    name: item.name,
+                    size: item.size,
+                    quantity: item.quantity,
+                    price: item.price,
+                    totalPrice: item.totalPrice
+                })),
+                shippingDetails: {
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    email: formData.email,
+                    phone: formData.phone,
+                    address: formData.address,
+                    city: formData.city,
+                    state: formData.state,
+                    zipCode: formData.zipCode
+                },
+                paymentDetails: {
+                    cardName: formData.cardName,
+                    lastFourDigits: formData.cardNumber.slice(-4)
+                },
+                subtotal, 
+                shipping, 
+                tax, 
+                total
+            };
+
+            // Create order
+            const response = await createOrder(orderData);
+            
+            if (response.data.success) {
+                clearCart();
+                setOrderPlaced(true);
+
+                // Redirect to dashboard after 3 seconds
+                setTimeout(() => {
+                    navigate('/profile');
+                }, 3000);
+            }
+        } catch (error) {
+            alert('Order failed: ' + (error.response?.data?.message || error.message));
+        }
     };
 
     if (cart.length === 0 && !orderPlaced) {
@@ -142,25 +236,25 @@ const Checkout = () => {
                             
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">First Name (from your profile)</label>
                                     <input 
                                         type="text" 
                                         name="firstName"
                                         value={formData.firstName}
-                                        onChange={handleInputChange}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-800"
+                                        disabled
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
                                         placeholder="John"
                                         required
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Last Name (from your profile)</label>
                                     <input 
                                         type="text"
                                         name="lastName" 
                                         value={formData.lastName}
-                                        onChange={handleInputChange}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-800"
+                                        disabled
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
                                         placeholder="Doe"
                                         required
                                     />
@@ -169,25 +263,25 @@ const Checkout = () => {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Email (from your profile)</label>
                                     <input 
                                         type="email"
                                         name="email" 
                                         value={formData.email}
-                                        onChange={handleInputChange}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-800"
+                                        disabled
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
                                         placeholder="john@example.com"
                                         required
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Phone</label>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Phone (from your profile)</label>
                                     <input 
                                         type="tel"
                                         name="phone"
                                         value={formData.phone}
-                                        onChange={handleInputChange}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-800"
+                                        disabled
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
                                         placeholder="+1 (555) 123-4567"
                                         required
                                     />

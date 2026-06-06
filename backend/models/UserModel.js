@@ -24,6 +24,24 @@ const userSchema = new mongoose.Schema({
         enum: ['user', 'admin'],
         default: 'user'
     },
+    profilePicture : {
+        type : String,
+        default : ''
+    },
+    phone : {
+        type : String,
+        default : ''
+    },
+    address : {
+        street: String,
+        city: String,
+        state: String,
+        zipCode: String
+    },
+    bio : {
+        type : String,
+        default : ''
+    },
     createdAt: {
         type: Date,
         default: Date.now

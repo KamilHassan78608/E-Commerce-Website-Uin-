@@ -1,5 +1,5 @@
 import { createContext, use, useContext, useEffect, useState } from "react"
-import { login as loginApi, register as registerApi, getProfile } from '../services/api';
+import { login as loginApi, register as registerApi, getProfile, updateProfile as updateProfileApi } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
@@ -75,6 +75,20 @@ const AuthProvider = ({ children }) => {
         }
     };
 
+    const updateProfile = async (userData) => {
+        try {
+            const response = await updateProfileApi(userData);
+            // Backend returns { success, message, user }
+            setUser(response.data.user || response.data);
+            return { success: true };
+        } catch (error) {
+            return { 
+                success: false, 
+                error: error.response?.data?.message || 'Update failed' 
+            };
+        }
+    };
+
     const logOut = () => {
         localStorage.removeItem('token');
         setToken(null);
@@ -85,7 +99,15 @@ const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider 
-            value={{ user, loading, login, register, logOut }}
+            value={{ 
+                user,
+                loading,
+                login,
+                register,
+                updateProfile,
+                logOut,
+                navigate 
+            }}
         >
             {children}
         </AuthContext.Provider>

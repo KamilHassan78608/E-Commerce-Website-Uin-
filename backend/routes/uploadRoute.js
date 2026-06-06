@@ -72,7 +72,7 @@ router.post('/images', protect, upload.array('images', 5), async (req, res) => {
         }
 
         res.status(200).json({
-            success : true,
+            success : true, 
             count :uploadedImage.length,
             images: uploadedImage
         });

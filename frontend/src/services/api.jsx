@@ -28,7 +28,24 @@ api.interceptors.request.use(
 // Auth Apis
 export const register = (userData) => api.post('/auth/register', userData);
 export const login = (userData) => api.post('/auth/login', userData);
+export const updateProfile = (userData) => api.put('/auth/update', userData);
 export const getProfile = () => api.get('/auth/profile');
 export const getUsers = () => api.get('/auth/user');
+
+// Order Apis
+export const createOrder = (orderData) => api.post('/orders/create', orderData);
+export const getMyOrders = () => api.get('/orders/my-orders');
+
+// Wallet Apis
+export const getWalletInfo = () => api.get('/wallet/info');
+export const addBalance = (data) => api.post('/wallet/add-balance', data);
+export const getTransactionHistory = () => api.get('/wallet/transactions');
+export const useWalletBalance = (data) => api.post('/wallet/use-balance', data);
+
+// Card Apis
+export const addCard = (cardData) => api.post('/wallet/card/add', cardData);
+export const getMyCards = () => api.get('/wallet/cards');
+export const setDefaultCard = (cardId) => api.put(`/wallet/card/${cardId}/default`);
+export const deleteCard = (cardId) => api.delete(`/wallet/card/${cardId}`);
 
 export default api;
