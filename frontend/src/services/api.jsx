@@ -33,8 +33,21 @@ export const getProfile = () => api.get('/auth/profile');
 export const getUsers = () => api.get('/auth/user');
 
 // Order Apis
-export const createOrder = (orderData) => api.post('/orders/create', orderData);
-export const getMyOrders = () => api.get('/orders/my-orders');
+// export const createOrder = (orderData) => api.post('/orders/create', orderData);
+// export const getMyOrders = () => api.get('/orders/my-orders');
+
+// services/api.js
+export const getMyOrders = (userId) => {
+    return api.get(`/orders/my-orders?userId=${userId}`);
+};
+
+export const createOrder = (orderData) => {
+    return api.post('/orders/create', orderData);
+};
+
+export const cancelOrder = (id) => {
+    return api.put(`/orders/${id}/cancel`);
+};
 
 // Wallet Apis
 export const getWalletInfo = () => api.get('/wallet/info');
@@ -54,5 +67,25 @@ export const addToCartAPI = (cartData) => api.post('/cart/add-item', cartData);
 export const updateCartItemAPI = (updateData) => api.put('/cart/update-item', updateData);
 export const removeFromCartAPI = (removeData) => api.delete('/cart/remove-item', { data: removeData });
 export const clearCartAPI = () => api.delete('/cart/clear-cart');
+
+// Product Apis
+export const getAllProducts = (params) => api.get('/products', { params });
+export const getProductById = (id) => api.get(`/products/${id}`);
+export const createProduct = (formData) => api.post('/products', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+});
+export const updateProduct = (id, formData) => api.put(`/products/${id}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+});
+export const deleteProduct = (id) => api.delete(`/products/${id}`);
+
+// Admin Apis
+export const getAllUsers = () => api.get('/admin/users');
+export const getUserById = (id) => api.get(`/admin/users/${id}`);
+export const updateUserRole = (id, role) => api.put(`/admin/users/${id}/role`, { role });
+export const getAllOrders = () => api.get('/admin/orders');
+export const getOrderById = (id) => api.get(`/admin/orders/${id}`);
+export const updateOrderStatus = (id, status) => api.put(`/admin/orders/${id}`, { status });
+export const deleteOrder = (id) => api.delete(`/admin/orders/${id}`);
 
 export default api;

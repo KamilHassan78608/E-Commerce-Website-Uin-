@@ -15,7 +15,7 @@ const Navbar = () => {
     const [isOpen, setisOpen] = useState(false);
     const location = useLocation();
 
-    const NavItems = ["Home", "Collection", "Discover", "Our Story", "Visit Us"];
+    const NavItems = ["Home", "Collection", "Our Story", "Visit Us"];
 
     useEffect(() => {
         const currentPath = location.pathname;
@@ -84,13 +84,25 @@ const Navbar = () => {
                   </button>
                 
                 { user ? 
-                    <Link 
-                        to="/profile" 
-                        aria-label="User Account" 
-                        className='text-gray-800 rounded-full transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'
-                    >
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREEL0fugUdSLA3irSG8d2zytjXGJ6TCKhWAw&s" className='object-cover rounded-full h-7 w-7' alt="profile" />
-                    </Link>
+                    <>
+                        <Link 
+                            to="/profile" 
+                            aria-label="User Account" 
+                            className='text-gray-800 rounded-full transition-all duration-300 hover:text-indigo-500 hover:scale-110 cursor-pointer'
+                        >
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREEL0fugUdSLA3irSG8d2zytjXGJ6TCKhWAw&s" className='object-cover rounded-full h-7 w-7' alt="profile" />
+                        </Link>
+                        {user.role === 'admin' && (
+                            <Link 
+                                to="/admin" 
+                                aria-label="Admin Dashboard" 
+                                className='text-gray-800 transition-all duration-300 hover:text-purple-600 hover:scale-110 cursor-pointer font-semibold text-sm'
+                                title="Admin Dashboard"
+                            >
+                                ⚙️
+                            </Link>
+                        )}
+                    </>
                     :
                     <Link 
                         to="/login" 

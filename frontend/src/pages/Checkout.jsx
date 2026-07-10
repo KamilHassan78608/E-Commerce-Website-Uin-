@@ -9,6 +9,8 @@ const Checkout = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
 
+    
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -48,6 +50,15 @@ const Checkout = () => {
         }
     }, [user]);
 
+
+//     useEffect(() => {
+//     console.log("USER");
+//     console.log(user);
+
+//     console.log("FORM");
+//     console.log(formData);
+// }, [user, formData]);
+
     // Calculate totals
     const subtotal = cart.reduce((sum, item) => sum + item.totalPrice, 0);
     const shipping = subtotal > 0 ? 50 : 0;
@@ -56,11 +67,6 @@ const Checkout = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        
-        // Prevent editing of firstName, lastName, email, phone
-        if (['firstName', 'lastName', 'email', 'phone'].includes(name)) {
-            return;
-        }
         
         setFormData(prev => ({
             ...prev,
@@ -75,19 +81,6 @@ const Checkout = () => {
         if (!user) {
             alert('Please log in first');
             navigate('/login');
-            return;
-        }
-
-        // Validate that personal details match logged-in user
-        const nameParts = user.name.split(' ');
-        const expectedFirstName = nameParts[0] || '';
-        const expectedLastName = nameParts.slice(1).join(' ') || '';
-        
-        if (formData.firstName !== expectedFirstName || 
-            formData.lastName !== expectedLastName ||
-            formData.email !== user.email ||
-            formData.phone !== user.phone) {
-            alert('Personal details must match your profile information');
             return;
         }
 
@@ -208,6 +201,7 @@ const Checkout = () => {
         );
     }
 
+
     return (
         <div className="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8 py-10">
             {/* Notification Toast */}
@@ -240,8 +234,8 @@ const Checkout = () => {
                                     <input 
                                         type="text" 
                                         name="firstName"
+                                        onChange={handleInputChange}
                                         value={formData.firstName}
-                                        disabled
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
                                         placeholder="John"
                                         required
@@ -252,8 +246,8 @@ const Checkout = () => {
                                     <input 
                                         type="text"
                                         name="lastName" 
+                                        onChange={handleInputChange}
                                         value={formData.lastName}
-                                        disabled
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
                                         placeholder="Doe"
                                         required
@@ -267,8 +261,8 @@ const Checkout = () => {
                                     <input 
                                         type="email"
                                         name="email" 
+                                        onChange={handleInputChange}
                                         value={formData.email}
-                                        disabled
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
                                         placeholder="john@example.com"
                                         required
@@ -279,8 +273,8 @@ const Checkout = () => {
                                     <input 
                                         type="tel"
                                         name="phone"
+                                        onChange={handleInputChange}
                                         value={formData.phone}
-                                        disabled
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
                                         placeholder="+1 (555) 123-4567"
                                         required

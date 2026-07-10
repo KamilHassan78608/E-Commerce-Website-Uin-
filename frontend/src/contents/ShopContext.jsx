@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import products from '../data/Products';
 import { fashionThemes } from "../data/DiscoverData";
+import { getAllProducts as fetchProductsAPI } from '../services/api';
 import { getMyCart, addToCartAPI, updateCartItemAPI, removeFromCartAPI, clearCartAPI } from '../services/api';
 
 export const ShopContext = createContext();
@@ -17,7 +17,33 @@ const ShopContextProvider = (props) => {
     const [cartLoading, setCartLoading] = useState(false);
     const [cartError, setCartError] = useState(null);
 
+    // Products state - fetched from backend API
+    const [products, setProducts] = useState([]);
+    const [productsLoading, setProductsLoading] = useState(true);
+    const [productsError, setProductsError] = useState(null);
+
     const navigate = useNavigate();
+
+    // Fetch products from backend API on mount
+    useEffect(() => {
+        const loadProducts = async () => {
+            try {
+                setProductsLoading(true);
+                setProductsError(null);
+                const response = await fetchProductsAPI();
+                if (response.data.success) {
+                    setProducts(response.data.products || []);
+                }
+            } catch (error) {
+                console.error('Failed to load products:', error);
+                setProductsError('Failed to load products. Please try again.');
+            } finally {
+                setProductsLoading(false);
+            }
+        };
+
+        loadProducts();
+    }, []);
 
     // Load cart from backend on mount if user is logged in
     useEffect(() => {
@@ -184,9 +210,27 @@ const ShopContextProvider = (props) => {
         filterProducts(query);
     }
 
+    // Function to refresh products (useful after admin add/update/delete)
+    const refreshProducts = async () => {
+        try {
+            setProductsLoading(true);
+            const response = await fetchProductsAPI();
+            if (response.data.success) {
+                setProducts(response.data.products || []);
+            }
+        } catch (error) {
+            console.error('Failed to refresh products:', error);
+        } finally {
+            setProductsLoading(false);
+        }
+    };
+
     const value = {
         Currency,
         products,
+        productsLoading,
+        productsError,
+        refreshProducts,
         fashionThemes,
         showSearch, setshowSearch,
         searchQuery, setSearchQuery,

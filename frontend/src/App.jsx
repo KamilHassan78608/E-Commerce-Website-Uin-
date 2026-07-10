@@ -1,11 +1,10 @@
 import React, { Children, useContext } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import AdminRoute from './components/AdminRoute'
 import Home from './pages/Home'
 import Collection from './pages/Collection'
-import Discover from './pages/Discover'
-import DiscoverDetail from './pages/DiscoverDetail'
 import Our_Story from './pages/Our_Story'
 import Visit_Us from './pages/Visit_Us'
 import Product from './pages/Product'
@@ -15,10 +14,15 @@ import SignUp from './pages/SignUp'
 import Login from './pages/Login'
 import { useAuth } from './contents/AuthContext'
 import UserDashBoared from './pages/UserDashBoared'
+import AdminDashboard from './pages/AdminDashboard'
 
 const App = () => {
 
   const { loading, user } = useAuth();
+  const location = useLocation();
+
+  // Check if this is an admin route
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   // protected Route - Only for Log In user
   const ProtectedRoute = ({ children }) => {
@@ -45,6 +49,18 @@ const App = () => {
     return children;
   };
 
+  if (isAdminRoute) {
+    return (
+      <Routes>
+        <Route path='/admin' element={
+          <AdminRoute>
+            <AdminDashboard />
+          </AdminRoute>
+        } />
+      </Routes>
+    );
+  }
+
   return (
     <div className='px-10 sm:px-[5vw] md:px-[7vw] lg:px-[8vw]'>
       <Navbar />
@@ -52,8 +68,6 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/collection' element={<Collection />} />
-        <Route path='/discover' element={<Discover />} />
-        <Route path='/discover/:id' element={<DiscoverDetail />} />
         <Route path='/product/:productId' element={<Product />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/checkout' element={<Checkout />} />
