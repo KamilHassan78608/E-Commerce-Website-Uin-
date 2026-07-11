@@ -1,5 +1,6 @@
 import React from 'react'
 import { Heart, Target, Users, Zap, Award, TrendingUp, Leaf } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 const Our_Story = () => {
   const values = [
@@ -78,43 +79,96 @@ const Our_Story = () => {
     <div className='min-h-screen bg-white'>
       
       {/* Hero Section - Premium Design */}
-      <section className='relative py-24 md:py-32 overflow-hidden'>
+      <motion.section 
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className='relative py-24 md:py-32 overflow-hidden'
+      >
         {/* Animated Background Elements */}
         <div className='absolute top-0 right-0 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse'></div>
         <div className='absolute bottom-0 left-0 w-80 h-80 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse' style={{animationDelay: '2s'}}></div>
         
         <div className='relative flex flex-col items-center text-center max-w-4xl mx-auto px-6'>
-          <span className='inline-block mb-4 px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider'>Our Heritage</span>
-          <h1 className='gradient-text mb-8 text-5xl md:text-7xl font-black leading-tight'>Crafting Stories,<br />One Piece at a Time</h1>
-          <p className='text-gray-600 max-w-2xl text-lg md:text-xl leading-relaxed font-light'>
+          <motion.span 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className='inline-block mb-4 px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider'
+          >
+            Our Heritage
+          </motion.span>
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className='gradient-text mb-8 text-5xl md:text-7xl font-black leading-tight'
+          >
+            Crafting Stories,<br />One Piece at a Time
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className='text-gray-600 max-w-2xl text-lg md:text-xl leading-relaxed font-light'
+          >
             From a passionate vision to a trusted fashion destination, Dukan has been creating moments of style, confidence, and authentic connection for thousands of customers worldwide.
-          </p>
+          </motion.p>
         </div>
-      </section>
+      </motion.section>
 
       {/* Stats Section */}
-      <section className='py-12 md:py-16 bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50'>
+      <motion.section 
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className='py-12 md:py-16 bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50'
+      >
         <div className='grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto px-6'>
           {stats.map((stat, index) => (
-            <div key={index} className='flex flex-col items-center text-center py-8'>
+            <motion.div 
+              key={index} 
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.15 }}
+              className='flex flex-col items-center text-center py-8'
+            >
               <div className='mb-4 p-4 bg-white rounded-2xl shadow-lg text-indigo-500'>
                 {stat.icon}
               </div>
               <h3 className='text-4xl md:text-5xl font-black text-gray-900 mb-2'>{stat.number}</h3>
               <p className='text-gray-600 font-semibold'>{stat.label}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       <div className='h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-12'></div>
 
       {/* Mission & Vision Section - Side by Side */}
-      <section className='py-20 md:py-28'>
+      <motion.section 
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className='py-20 md:py-28'
+      >
         <div className='max-w-6xl mx-auto px-6'>
           <div className='grid md:grid-cols-2 gap-12 md:gap-16'>
             {/* Mission */}
-            <div className='flex flex-col justify-center group'>
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className='flex flex-col justify-center group'
+            >
               <div className='mb-6 p-4 w-16 h-16 bg-indigo-100 rounded-2xl group-hover:bg-indigo-200 transition-colors flex items-center justify-center'>
                 <Target className='w-8 h-8 text-indigo-600' />
               </div>
@@ -122,15 +176,27 @@ const Our_Story = () => {
               <p className='text-gray-600 leading-relaxed mb-6 text-lg font-light'>
                 To democratize fashion by providing high-quality, trendy, and sustainable clothing that allows everyone to discover their unique style without compromise. We believe fashion should be accessible, inspiring, and absolutely authentic.
               </p>
-              <div className='mt-4 p-6 bg-indigo-50 rounded-2xl border-l-4 border-indigo-500'>
+              <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className='mt-4 p-6 bg-indigo-50 rounded-2xl border-l-4 border-indigo-500'
+              >
                 <p className='text-indigo-700 italic font-semibold text-lg'>
                   "Making style personal, quality uncompromising, and fashion truly inclusive."
                 </p>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
             
             {/* Vision */}
-            <div className='flex flex-col justify-center group'>
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className='flex flex-col justify-center group'
+            >
               <div className='mb-6 p-4 w-16 h-16 bg-purple-100 rounded-2xl group-hover:bg-purple-200 transition-colors flex items-center justify-center'>
                 <Zap className='w-8 h-8 text-purple-600' />
               </div>
@@ -138,49 +204,106 @@ const Our_Story = () => {
               <p className='text-gray-600 leading-relaxed mb-6 text-lg font-light'>
                 To become the world's most trusted fashion brand, recognized for our unwavering commitment to quality, innovation, and sustainability. A brand where every customer feels genuinely seen, deeply valued, and truly inspired.
               </p>
-              <div className='mt-4 p-6 bg-purple-50 rounded-2xl border-l-4 border-purple-500'>
+              <motion.div 
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className='mt-4 p-6 bg-purple-50 rounded-2xl border-l-4 border-purple-500'
+              >
                 <p className='text-purple-700 italic font-semibold text-lg'>
                   "Where passion meets purpose, style becomes identity, and fashion shapes futures."
                 </p>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       <div className='h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-12'></div>
 
       {/* Core Values Section - Premium Cards */}
-      <section className='py-20 md:py-28'>
+      <motion.section 
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className='py-20 md:py-28'
+      >
         <div className='max-w-7xl mx-auto px-6'>
           <div className='text-center mb-16'>
-            <span className='inline-block mb-4 px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider'>What Drives Us</span>
-            <h2 className='gradient-text text-5xl md:text-6xl font-black'>Core Values</h2>
+            <motion.span 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className='inline-block mb-4 px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider'
+            >
+              What Drives Us
+            </motion.span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className='gradient-text text-5xl md:text-6xl font-black'
+            >
+              Core Values
+            </motion.h2>
           </div>
           
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
             {values.map((value, index) => (
-              <div key={index} className={`group bg-gradient-to-br ${value.color} p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100`}>
+              <motion.div 
+                key={index} 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className={`group bg-gradient-to-br ${value.color} p-8 rounded-3xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100`}
+              >
                 <div className='mb-6 p-4 bg-white rounded-2xl shadow-md group-hover:shadow-lg transition-shadow w-fit group-hover:scale-110 transition-transform'>
                   {value.icon}
                 </div>
                 <h3 className='text-2xl font-black mb-4 text-gray-900'>{value.title}</h3>
                 <p className='text-gray-700 leading-relaxed font-light text-sm'>{value.description}</p>
                 <div className='mt-6 h-1 w-0 group-hover:w-12 bg-indigo-500 transition-all rounded-full'></div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       <div className='h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-12'></div>
 
       {/* Timeline Section - Enhanced */}
-      <section className='py-20 md:py-28'>
+      <motion.section 
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className='py-20 md:py-28'
+      >
         <div className='max-w-6xl mx-auto px-6'>
           <div className='text-center mb-16'>
-            <span className='inline-block mb-4 px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider'>Our Evolution</span>
-            <h2 className='gradient-text text-5xl md:text-6xl font-black'>Our Journey</h2>
+            <motion.span 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className='inline-block mb-4 px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider'
+            >
+              Our Evolution
+            </motion.span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className='gradient-text text-5xl md:text-6xl font-black'
+            >
+              Our Journey
+            </motion.h2>
           </div>
 
           {/* Timeline */}
@@ -190,7 +313,14 @@ const Our_Story = () => {
             
             <div className='space-y-16'>
               {timeline.map((item, index) => (
-                <div key={index} className={`flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                <motion.div 
+                  key={index} 
+                  initial={{ opacity: 0, y: 60 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className={`flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+                >
                   {/* Content */}
                   <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'}`}>
                     <div className='bg-white border-2 border-gray-100 p-8 rounded-2xl hover:shadow-2xl hover:border-indigo-300 transition-all duration-300 group'>
@@ -212,35 +342,61 @@ const Our_Story = () => {
                   
                   {/* Empty Space */}
                   <div className='w-full md:w-5/12'></div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       <div className='h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-12'></div>
 
       {/* Call to Action Section - Premium */}
-      <section className='py-24 md:py-32 relative overflow-hidden'>
+      <motion.section 
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className='py-24 md:py-32 relative overflow-hidden'
+      >
         {/* Background Elements */}
         <div className='absolute top-0 left-0 w-72 h-72 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse'></div>
         <div className='absolute bottom-0 right-0 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse' style={{animationDelay: '2s'}}></div>
         
         <div className='relative text-center max-w-3xl mx-auto px-6'>
-          <h2 className='text-5xl md:text-6xl font-black mb-6 text-gray-900'>Join Our Community</h2>
-          <p className='text-gray-600 mb-10 max-w-2xl mx-auto text-lg leading-relaxed font-light'>
+          <motion.h2 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className='text-5xl md:text-6xl font-black mb-6 text-gray-900'
+          >
+            Join Our Community
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className='text-gray-600 mb-10 max-w-2xl mx-auto text-lg leading-relaxed font-light'
+          >
             Every purchase is a step in our shared journey toward a more inclusive, sustainable, and beautiful fashion future. Be part of something greater.
-          </p>
-          <a 
+          </motion.p>
+          <motion.a 
             href="/collection" 
-            className='inline-block text-base md:text-lg py-4 px-10 font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:shadow-2xl hover:scale-105 cursor-pointer group relative uppercase tracking-widest transition-all'
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className='inline-block text-base md:text-lg py-4 px-10 font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:shadow-2xl cursor-pointer group relative uppercase tracking-widest transition-all'
           >
             Explore Collection
             <span className='ml-2 group-hover:translate-x-1 transition-transform inline-block'>→</span>
-          </a>
+          </motion.a>
         </div>
-      </section>
+      </motion.section>
 
     </div>
   )

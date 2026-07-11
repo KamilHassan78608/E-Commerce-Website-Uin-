@@ -1,9 +1,15 @@
 import React from 'react'
 import { Mail } from 'lucide-react'
+import { motion } from "framer-motion"
 
 const Footer = () => {
   return (
-    <footer className='border-t border-gray-400 py-12 md:py-20 px-4 sm:px-8'>
+    <motion.div 
+      initial={{ opacity: 0, y: 80 }}
+      whileInView={{ opacity: 1, y: 0 }}// animate when visible
+      viewport={{ once: false, amount: 0.2 }}  // animate once only
+      transition={{ duration: 1, ease: "easeOut" }}
+      className='border-t border-gray-400 py-12 md:py-20 px-4 sm:px-8'>
       <div className='flex flex-wrap -mx-4'>
 
         {/* Logo and Description - Full width on mobile, 1/2 on tablet, 1/4 on desktop */}
@@ -63,7 +69,7 @@ const Footer = () => {
       <div className='mt-12 pt-8 border-t border-gray-200 text-center text-gray-400 text-sm'>
         © {new Date().getFullYear()} Dukan Inc. All rights reserved.
       </div>
-    </footer>
+    </motion.div>
   )
 }
 

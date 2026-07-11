@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { MapPin, Phone, Mail, Clock, MessageSquare, Heart } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 const Visit_Us = () => {
   const [selectedStore, setselectedStore] = useState(0);
@@ -71,29 +72,70 @@ const Visit_Us = () => {
     <div className='min-h-screen bg-white'>
       
       {/* Hero Section */}
-      <section className='relative py-20 md:py-28 overflow-hidden'>
+      <motion.section 
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className='relative py-20 md:py-28 overflow-hidden'
+      >
         {/* Animated Background */}
         <div className='absolute top-0 right-0 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse'></div>
         <div className='absolute bottom-0 left-0 w-80 h-80 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse' style={{animationDelay: '2s'}}></div>
         
         <div className='relative max-w-4xl mx-auto text-center px-6'>
-          <span className='inline-block mb-4 px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider'>Location</span>
-          <h1 className='gradient-text text-5xl md:text-7xl font-black mb-6 leading-tight'>Visit Our Stores</h1>
-          <p className='text-gray-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light'>
+          <motion.span 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className='inline-block mb-4 px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider'
+          >
+            Location
+          </motion.span>
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className='gradient-text text-5xl md:text-7xl font-black mb-6 leading-tight'
+          >
+            Visit Our Stores
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className='text-gray-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light'
+          >
             Step into the world of Dukan and experience our premium collection in person. We'd love to meet you at any of our locations across Pakistan.
-          </p>
+          </motion.p>
         </div>
-      </section>
+      </motion.section>
 
       {/* Gradient Separator */}
       <div className='h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent'></div>
 
       {/* Quick Contact Info */}
-      <section className='py-16 md:py-20'>
+      <motion.section 
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className='py-16 md:py-20'
+      >
         <div className='max-w-6xl mx-auto px-6'>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
             {contactInfo.map((info, index) => (
-              <div key={index} className='bg-gradient-to-br from-indigo-50 to-blue-50 p-8 rounded-2xl border-2 border-indigo-100 hover:border-indigo-300 transition-all text-center group'>
+              <motion.div 
+                key={index} 
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.15 }}
+                className='bg-gradient-to-br from-indigo-50 to-blue-50 p-8 rounded-2xl border-2 border-indigo-100 hover:border-indigo-300 transition-all text-center group'
+              >
                 <div className='flex justify-center mb-4'>
                   <div className='p-4 bg-white rounded-2xl text-indigo-600 group-hover:shadow-lg transition-shadow'>
                     {info.icon}
@@ -102,35 +144,63 @@ const Visit_Us = () => {
                 <h3 className='text-2xl font-bold mb-2 text-gray-900'>{info.title}</h3>
                 <p className='text-indigo-600 font-bold text-lg mb-1'>{info.value}</p>
                 <p className='text-gray-600 text-sm'>{info.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Gradient Separator */}
       <div className='h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent'></div>
 
       {/* Store Locations Section */}
-      <section className='py-20 md:py-28'>
+      <motion.section 
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className='py-20 md:py-28'
+      >
         <div className='max-w-7xl mx-auto px-6'>
           <div className='text-center mb-16'>
-            <span className='inline-block mb-4 px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider'>Our Stores</span>
-            <h2 className='gradient-text text-5xl md:text-6xl font-black'>Store Locations</h2>
+            <motion.span 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className='inline-block mb-4 px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider'
+            >
+              Our Stores
+            </motion.span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className='gradient-text text-5xl md:text-6xl font-black'
+            >
+              Store Locations
+            </motion.h2>
           </div>
 
           <div className='grid lg:grid-cols-3 gap-8'>
             {/* Store Cards */}
             <div className='lg:col-span-1 space-y-4'>
               {stores.map((store, index) => (
-                <div
+                <motion.div
                   key={index}
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                   onClick={() => setselectedStore(index)}
                   className={`p-6 rounded-2xl cursor-pointer transition-all transform ${
                     selectedStore === index
                       ? 'bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-2xl scale-105'
                       : 'bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 hover:shadow-lg'
                   }`}
+                  whileHover={{ scale: selectedStore === index ? 1.05 : 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   <div className='flex items-start gap-4'>
                     <div className='text-4xl'>{store.image}</div>
@@ -149,12 +219,18 @@ const Visit_Us = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
             {/* Map and Details */}
-            <div className='lg:col-span-2'>
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className='lg:col-span-2'
+            >
               {/* Map */}
               <div className='rounded-3xl overflow-hidden shadow-2xl mb-8 h-96 lg:h-full'>
                 <iframe
@@ -168,126 +244,213 @@ const Visit_Us = () => {
                   title={`${stores[selectedStore].name} Location`}
                 ></iframe>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Detailed Store Info Cards */}
-          <div className='mt-12'>
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className='mt-12'
+          >
             <div className='bg-gradient-to-r from-indigo-50 to-purple-50 rounded-3xl p-8 md:p-12 border-2 border-indigo-100'>
               <div className='grid md:grid-cols-3 gap-8'>
-                <div className='flex gap-4'>
-                  <div className='p-4 bg-white rounded-2xl h-fit'>
-                    <MapPin className='w-6 h-6 text-indigo-600' />
-                  </div>
-                  <div>
-                    <h4 className='font-black text-gray-900 mb-2'>Address</h4>
-                    <p className='text-gray-600'>{stores[selectedStore].address}</p>
-                  </div>
-                </div>
-                <div className='flex gap-4'>
-                  <div className='p-4 bg-white rounded-2xl h-fit'>
-                    <Clock className='w-6 h-6 text-indigo-600' />
-                  </div>
-                  <div>
-                    <h4 className='font-black text-gray-900 mb-2'>Store Hours</h4>
-                    <p className='text-gray-600 text-sm'>
+                {[
+                  { icon: <MapPin className='w-6 h-6 text-indigo-600' />, title: 'Address', content: stores[selectedStore].address },
+                  { icon: <Clock className='w-6 h-6 text-indigo-600' />, title: 'Store Hours', content: (
+                    <>
                       <span className='block'>Weekdays: {stores[selectedStore].hours.weekdays}</span>
                       <span className='block'>Weekend: {stores[selectedStore].hours.weekend}</span>
-                    </p>
-                  </div>
-                </div>
-                <div className='flex gap-4'>
-                  <div className='p-4 bg-white rounded-2xl h-fit'>
-                    <Mail className='w-6 h-6 text-indigo-600' />
-                  </div>
-                  <div>
-                    <h4 className='font-black text-gray-900 mb-2'>Contact</h4>
-                    <p className='text-gray-600 text-sm'>
+                    </>
+                  )},
+                  { icon: <Mail className='w-6 h-6 text-indigo-600' />, title: 'Contact', content: (
+                    <>
                       <a href={`tel:${stores[selectedStore].phone}`} className='hover:text-indigo-600 transition-colors block'>{stores[selectedStore].phone}</a>
                       <a href={`mailto:${stores[selectedStore].email}`} className='hover:text-indigo-600 transition-colors'>{stores[selectedStore].email}</a>
-                    </p>
-                  </div>
-                </div>
+                    </>
+                  )}
+                ].map((item, index) => (
+                  <motion.div 
+                    key={index}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.15 + 0.3 }}
+                    className='flex gap-4'
+                  >
+                    <div className='p-4 bg-white rounded-2xl h-fit'>
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h4 className='font-black text-gray-900 mb-2'>{item.title}</h4>
+                      <p className='text-gray-600 text-sm'>{item.content}</p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Gradient Separator */}
       <div className='h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent'></div>
 
       {/* Contact Form Section */}
-      <section className='py-20 md:py-28 relative overflow-hidden'>
+      <motion.section 
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className='py-20 md:py-28 relative overflow-hidden'
+      >
         {/* Animated Background */}
         <div className='absolute top-0 right-0 w-72 h-72 bg-pink-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse'></div>
         
         <div className='relative max-w-2xl mx-auto px-6'>
           <div className='text-center mb-12'>
-            <span className='inline-block mb-4 px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider'>Get In Touch</span>
-            <h2 className='gradient-text text-5xl md:text-6xl font-black mb-4'>Send Us a Message</h2>
-            <p className='text-gray-600 text-lg'>Have a question? We'd love to hear from you.</p>
+            <motion.span 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className='inline-block mb-4 px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full text-xs font-bold uppercase tracking-wider'
+            >
+              Get In Touch
+            </motion.span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className='gradient-text text-5xl md:text-6xl font-black mb-4'
+            >
+              Send Us a Message
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className='text-gray-600 text-lg'
+            >
+              Have a question? We'd love to hear from you.
+            </motion.p>
           </div>
 
-          <form className='space-y-6 bg-gradient-to-br from-indigo-50 to-purple-50 p-8 md:p-12 rounded-3xl border-2 border-indigo-100'>
+          <motion.form 
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className='space-y-6 bg-gradient-to-br from-indigo-50 to-purple-50 p-8 md:p-12 rounded-3xl border-2 border-indigo-100'
+          >
             <div className='grid md:grid-cols-2 gap-6'>
-              <input 
+              <motion.input 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.4 }}
                 type="text" 
                 placeholder="Your Name" 
                 className='px-6 py-4 rounded-xl border-2 border-indigo-200 focus:border-indigo-500 outline-none font-medium transition-colors'
                 required
               />
-              <input 
+              <motion.input 
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.5 }}
                 type="email" 
                 placeholder="Your Email" 
                 className='px-6 py-4 rounded-xl border-2 border-indigo-200 focus:border-indigo-500 outline-none font-medium transition-colors'
                 required
               />
             </div>
-            <input 
+            <motion.input 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.6 }}
               type="text" 
               placeholder="Subject" 
               className='w-full px-6 py-4 rounded-xl border-2 border-indigo-200 focus:border-indigo-500 outline-none font-medium transition-colors'
               required
             />
-            <textarea 
+            <motion.textarea 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.7 }}
               placeholder="Your Message" 
               rows="5"
               className='w-full px-6 py-4 rounded-xl border-2 border-indigo-200 focus:border-indigo-500 outline-none font-medium transition-colors resize-none'
               required
-            ></textarea>
-            <button 
+            ></motion.textarea>
+            <motion.button 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.8 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               type="submit"
               className='w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-xl hover:shadow-2xl transition-all uppercase tracking-widest group flex items-center justify-center gap-2'
             >
               <MessageSquare className='w-5 h-5' />
               Send Message
-            </button>
-          </form>
+            </motion.button>
+          </motion.form>
         </div>
-      </section>
+      </motion.section>
 
       {/* CTA Section */}
-      <section className='py-20 md:py-28 relative overflow-hidden'>
+      <motion.section 
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className='py-20 md:py-28 relative overflow-hidden'
+      >
         {/* Animated Background */}
         <div className='absolute top-0 left-0 w-96 h-96 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse'></div>
         
         <div className='relative max-w-4xl mx-auto text-center px-6'>
-          <h2 className='text-4xl md:text-6xl font-black mb-6 text-gray-900'>
+          <motion.h2 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className='text-4xl md:text-6xl font-black mb-6 text-gray-900'
+          >
             We're Excited to See You
-          </h2>
-          <p className='text-gray-600 text-lg mb-10 max-w-2xl mx-auto leading-relaxed font-light'>
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className='text-gray-600 text-lg mb-10 max-w-2xl mx-auto leading-relaxed font-light'
+          >
             Visit any of our stores to experience the Dukan difference. Our team is ready to help you find your perfect style.
-          </p>
-          <a 
+          </motion.p>
+          <motion.a 
             href='/'
-            className='inline-block text-base md:text-lg py-4 px-10 font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:shadow-2xl hover:scale-105 cursor-pointer group relative uppercase tracking-widest transition-all'
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className='inline-block text-base md:text-lg py-4 px-10 font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:shadow-2xl cursor-pointer group relative uppercase tracking-widest transition-all'
           >
             Back to Home
             <span className='ml-2 group-hover:translate-x-1 transition-transform inline-block'>→</span>
-          </a>
+          </motion.a>
         </div>
-      </section>
+      </motion.section>
 
     </div>
   )

@@ -41,8 +41,26 @@ export const getMyOrders = (userId) => {
     return api.get(`/orders/my-orders?userId=${userId}`);
 };
 
-export const createOrder = (orderData) => {
-    return api.post('/orders/create', orderData);
+// export const createOrder = (orderData) => {
+//     return api.post('/orders/create', orderData);
+// };
+
+export const createOrder = async (orderData) => {
+    try {
+        // Get user from localStorage or your auth context
+        const user = JSON.parse(localStorage.getItem('user')); // or however you store user
+        
+        // Make sure userId is included in the request
+        const response = await api.post('/orders/create', {
+            userId: user?._id || user?.id, // Use the correct user ID field
+            ...orderData
+        });
+        
+        return response.data;
+    } catch (error) {
+        console.error('API Error:', error);
+        throw error;
+    }
 };
 
 export const cancelOrder = (id) => {

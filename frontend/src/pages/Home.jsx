@@ -4,6 +4,7 @@ import Hero from '../components/Hero'
 import Product_Card from '../components/Product_Card';
 import { ShopContext } from '../contents/ShopContext';
 import { ArrowRight, Sparkles, Flame } from 'lucide-react'
+import { motion } from 'framer-motion';
 
 const Home = () => {
 
@@ -29,7 +30,12 @@ const Home = () => {
          {/* Animated Background */}
          <div className='absolute top-0 right-0 w-72 h-72 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse'></div>
          
-         <div className='relative'>
+         <motion.div
+          initial={{ opacity: 0, y: 80 }}
+          whileInView={{ opacity: 1, y: 0 }}// animate when visible
+          viewport={{ once: true, amount: 0.2 }}  // animate once only
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className='relative'>
            <div className='flex items-center justify-between mb-12 md:mb-16'>
              <div>
                <div className='inline-flex items-center gap-2 mb-4 px-4 py-2 bg-indigo-100 text-indigo-600 rounded-full'>
@@ -61,7 +67,7 @@ const Home = () => {
                <ArrowRight className='w-4 h-4 group-hover:translate-x-1 transition-transform' />
              </Link>
            </div>
-         </div>
+         </motion.div>
        </section>
 
         {/* Gradient Separator */}
@@ -72,7 +78,12 @@ const Home = () => {
          {/* Animated Background */}
          <div className='absolute bottom-0 left-0 w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse' style={{animationDelay: '2s'}}></div>
          
-         <div className='relative'>
+         <motion.div
+          initial={{ opacity: 0, y: 80 }}
+          whileInView={{ opacity: 1, y: 0 }}// animate when visible
+          viewport={{ once: true, amount: 0.2 }}  // animate once only
+          transition={{ duration: 0.6, ease: "easeOut" }}
+         className='relative'>
            <div className='flex items-center justify-between mb-12 md:mb-16'>
              <div>
                <div className='inline-flex items-center gap-2 mb-4 px-4 py-2 bg-red-100 text-red-600 rounded-full'>
@@ -104,11 +115,16 @@ const Home = () => {
                <ArrowRight className='w-4 h-4 group-hover:translate-x-1 transition-transform' />
              </Link>
            </div>
-         </div>
+         </motion.div>
         </section>
 
         {/* CTA Section */}
-        <section className='py-20 md:py-28 relative overflow-hidden mt-8'>
+        <motion.div
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}// animate when visible
+        viewport={{ once: true, amount: 0.2 }}  // animate once only
+        transition={{ duration: 0.6, ease: "easeOut" }}
+         className='py-20 md:py-28 relative overflow-hidden mt-8'>
          {/* Animated Background */}
          <div className='absolute top-0 left-0 w-96 h-96 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse'></div>
          <div className='absolute bottom-0 right-0 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse' style={{animationDelay: '2s'}}></div>
@@ -126,7 +142,7 @@ const Home = () => {
              <span className='ml-2 group-hover:translate-x-1 transition-transform inline-block'>→</span>
            </Link>
          </div>
-        </section>
+        </motion.div>
 
     </div>
   )

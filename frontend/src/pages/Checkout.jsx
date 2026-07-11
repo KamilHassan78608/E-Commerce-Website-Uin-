@@ -75,85 +75,92 @@ const Checkout = () => {
     };
 
     const handlePlaceOrder = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        // Verify user is logged in
-        if (!user) {
-            alert('Please log in first');
-            navigate('/login');
-            return;
+    // Verify user is logged in
+    if (!user) {
+        alert('Please log in first');
+        navigate('/login');
+        return;
+    }
+
+    // Validate form
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || 
+        !formData.address || !formData.city || !formData.state || !formData.zipCode) {
+        alert('Please fill in all shipping details');
+        return;
+    }
+
+    if (!formData.cardName || !formData.cardNumber || !formData.expiry || !formData.cvv) {
+        alert('Please fill in all payment details');
+        return;
+    }
+
+    if (cart.length === 0) {
+        alert('Your cart is empty');
+        return;
+    }
+
+    try {
+        // Prepare order data - MAKE SURE userId is included
+        const orderData = {
+            userId: user._id || user.id, // ADD THIS - required by backend
+            items: cart.map(item => ({
+                productId: item.productId || item._id,
+                name: item.name,
+                size: item.size,
+                quantity: item.quantity,
+                price: item.price,
+                totalPrice: item.totalPrice
+            })),
+            shippingAddress: { // Make sure this matches your Order model schema
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                phone: formData.phone,
+                street: formData.address,
+                city: formData.city,
+                state: formData.state,
+                zipCode: formData.zipCode
+            },
+            paymentMethod: 'credit_card', // Add payment method
+            paymentDetails: {
+                cardName: formData.cardName,
+                lastFourDigits: formData.cardNumber.slice(-4)
+            },
+            subtotal: subtotal,
+            shipping: shipping,
+            tax: tax,
+            totalAmount: total // Use totalAmount instead of total to match backend
+        };
+
+        console.log('Sending order data:', orderData); // Debug log
+
+        // Create order
+        const response = await createOrder(orderData);
+        
+        if (response.success) { // Check response structure
+            clearCart();
+            setOrderPlaced(true);
+            // notification('Order placed successfully!', 'success');
+            {notification && (
+                <div className={`fixed top-6 right-6 px-6 py-4 rounded-xl shadow-xl font-semibold text-white z-50 animate-slide-in transition-all
+                    ${notification.type === 'success' ? 'bg-green-500' : notification.type === 'error' ? 'bg-red-500' : 'bg-blue-500'}`}
+                >
+                    ORDER PALCED SUCCESFULLLY
+                </div>
+            )}
+
+            // Redirect to profile after 3 seconds
+            setTimeout(() => {
+                navigate('/profile');
+            }, 3000);
         }
-
-        // Validate form
-        if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || 
-            !formData.address || !formData.city || !formData.state || !formData.zipCode) {
-            alert('Please fill in all shipping details');
-            return;
-        }
-
-        if (!formData.cardName || !formData.cardNumber || !formData.expiry || !formData.cvv) {
-            alert('Please fill in all payment details');
-            return;
-        }
-
-        // Validate card number (basic)
-        if (formData.cardNumber.replace(/\s/g, '').length !== 16) {
-            alert('Card number must be 16 digits');
-            return;
-        }
-
-        if (cart.length === 0) {
-            alert('Your cart is empty');
-            return;
-        }
-
-        try {
-            // Prepare order data
-            const orderData = {
-                items: cart.map(item => ({
-                    productId: item.productId,
-                    name: item.name,
-                    size: item.size,
-                    quantity: item.quantity,
-                    price: item.price,
-                    totalPrice: item.totalPrice
-                })),
-                shippingDetails: {
-                    firstName: formData.firstName,
-                    lastName: formData.lastName,
-                    email: formData.email,
-                    phone: formData.phone,
-                    address: formData.address,
-                    city: formData.city,
-                    state: formData.state,
-                    zipCode: formData.zipCode
-                },
-                paymentDetails: {
-                    cardName: formData.cardName,
-                    lastFourDigits: formData.cardNumber.slice(-4)
-                },
-                subtotal, 
-                shipping, 
-                tax, 
-                total
-            };
-
-            // Create order
-            const response = await createOrder(orderData);
-            
-            if (response.data.success) {
-                clearCart();
-                setOrderPlaced(true);
-
-                // Redirect to dashboard after 3 seconds
-                setTimeout(() => {
-                    navigate('/profile');
-                }, 3000);
-            }
-        } catch (error) {
-            alert('Order failed: ' + (error.response?.data?.message || error.message));
-        }
-    };
+    } catch (error) {
+        console.error('Order creation error:', error);
+        alert('Order failed: ' + (error.response?.data?.message || error.message));
+    }
+};
 
     if (cart.length === 0 && !orderPlaced) {
         return (

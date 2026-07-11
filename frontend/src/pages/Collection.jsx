@@ -2,6 +2,7 @@ import { ChevronDown, ChevronUp, Search, SlidersHorizontal } from 'lucide-react'
 import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../contents/ShopContext';
 import Product_Card from '../components/Product_Card';
+import { motion } from 'framer-motion';
 
 const Collection = () => {
 
@@ -94,7 +95,12 @@ const Collection = () => {
     <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t'>
         
         {/* Sidebar - Category Bar */}
-        <div className='min-w-60 mt-4'>
+        <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}// animate when visible
+        viewport={{ once: true, amount: 0.2 }}  // animate once only
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className='min-w-60 mt-4'>
 
             {/* Filters */}
             <div className='mb-6'>
@@ -171,7 +177,7 @@ const Collection = () => {
                     ))
                 }
             </div>
-        </div>
+        </motion.div>
 
         {/* Products */}
         <div>
